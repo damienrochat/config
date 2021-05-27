@@ -78,6 +78,7 @@ RSpec.configure do |config|
         self.schema               = nil
         self.validation_contract  = nil
         self.fail_on_missing      = false
+        self.extra_sources        = []
         instance_variable_set(:@_ran_once, false)
       end
     end

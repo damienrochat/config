@@ -55,4 +55,13 @@ Config.setup do |config|
   # Evaluate ERB in YAML config files at load time.
   #
   # config.evaluate_erb_yaml = true
+
+  # Define extra sources of config values. Each source can be either file path, hash or a custom source.
+  # Extra sources will be merged with base settings files.
+  #
+  # config.extra_sources = [
+  #   "/path/to/source.yml",
+  #   { some_api_key: 'secret_key' },
+  #   Config::Sources::CustomSource.new(args)
+  # ]
 end

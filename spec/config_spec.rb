@@ -432,7 +432,33 @@ describe Config do
           expect(config.arraylist2.inner.size).to eq(6)
         end
       end
+    end
+  end
 
+  context 'when using extra sources' do
+    context 'in configuration phase' do
+      it 'should have empty array as default extra_sources value' do
+        expect(Config.extra_sources).to eq([])
+      end
+
+      it 'should be able to assign a different extra_sources values' do
+        Config.extra_sources = [{ server: "yahoo.com" }, { extra: { foo: "bar" } }]
+
+        expect(Config.extra_sources).to eq([{ server: "yahoo.com" }, { extra: { foo: "bar" } }])
+      end
+    end
+
+    context 'merging' do
+      let(:config) do
+        Config.extra_sources = [{ server: "yahoo.com" }, { extra: { foo: "bar" } }]
+        Config.load_files(["#{fixture_path}/settings.yml"])
+      end
+
+      it 'should merge settings from files and extra_sources' do
+        expect(config.size).to eq(1)
+        expect(config.server).to eq("yahoo.com")
+        expect(config.extra.foo).to eq("bar")
+      end
     end
   end
 end

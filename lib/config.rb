@@ -25,7 +25,8 @@ module Config
     overwrite_arrays: true,
     merge_hash_arrays: false,
     validation_contract: nil,
-    evaluate_erb_in_yaml: true
+    evaluate_erb_in_yaml: true,
+    extra_sources: []
   )
 
   def self.setup
@@ -41,6 +42,11 @@ module Config
     # add settings sources
     [files].flatten.compact.uniq.each do |file|
       config.add_source!(file.to_s)
+    end
+
+    # add optional extra sources
+    extra_sources.flatten.each do |source|
+      config.add_source!(source)
     end
 
     config.add_source!(Sources::EnvSource.new(ENV)) if Config.use_env
